@@ -45,6 +45,24 @@ class Product extends Model
         return $this->belongsToMany(Favorite::class, 'favorite_products')
                     ->withTimestamps();
     }
+    public function Quantity($quantity)
+    {
+        if ($this->quantity >= $quantity) {
+            $this->quantity -= $quantity; 
+            $this->save(); 
+            return true;
+        }
+        return false; 
+    }
+    public function updateQuantity($quantity,$new_quantity)
+    {
+       if ($this->quantity >=0) {
+        $quantity -= $new_quantity;
+        $this->quantity += $quantity;
+        $this->save();
+        return true;
+       }
 
+    }
 
 }

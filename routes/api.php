@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\nnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +27,16 @@ Route::middleware(['auth:sanctum','user.locale'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/profile', [UserController::class, 'updateProfile']);
     Route::post('/language',[UserController::class,'changeLocale']);
+    Route::apiResource('/order', OrderController::class);
 
 });
 
 //for admin(later):
 Route::apiResource('/stores',StoreController::class);
 
+// Route::apiResource('/order', OrderController::class);
+
+
+Route::group(['prefix' => 'products'],function(){
+    Route::apiResource('/product',ProductController::class);
+});
