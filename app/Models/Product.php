@@ -56,13 +56,14 @@ class Product extends Model
     }
     public function updateQuantity($quantity,$new_quantity)
     {
-       if ($this->quantity >=0) {
-        $quantity -= $new_quantity;
-        $this->quantity += $quantity;
+        $this->quantity+=$quantity;
+       if ($this->quantity- $new_quantity >= 0) {
+        // $quantity -= $new_quantity;
+        $this->quantity -= $new_quantity;
         $this->save();
         return true;
        }
-
+       return false;
     }
 
 }
