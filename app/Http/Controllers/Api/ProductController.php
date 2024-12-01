@@ -118,6 +118,4 @@ class ProductController extends Controller
             return response()->json(['message' => ' Something Wrong happenend ' . $e->getMessage()], 500);
         }
     }
-
-
 }

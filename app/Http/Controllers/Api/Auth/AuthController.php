@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -36,7 +38,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
+        $this->create_favorite_cart($user);
         return response()->json(['token' => $user->createToken('api-token')->plainTextToken]);
     }
 
@@ -45,6 +47,17 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out']);
     }
-
+    public function create_favorite_cart(User $user){
+        if (!Favorite::where('user_id', $user->id)->exists()){
+            $favorite = Favorite::create([
+                'user_id' => $user->id,
+            ]);
+        }if (!Cart::where('user_id', $user->id)->exists()){
+            $cart = Cart::create([
+                'user_id' => $user->id,
+            ]);
+        }
+       
+    }
 
 }

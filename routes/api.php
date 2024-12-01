@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\UserController;
@@ -28,14 +30,14 @@ Route::middleware(['auth:sanctum','user.locale'])->group(function () {
     Route::post('/profile', [UserController::class, 'updateProfile']);
     Route::post('/language',[UserController::class,'changeLocale']);
     Route::apiResource('/order', OrderController::class);
+    Route::apiResource('/favorite', FavoriteController::class);
+    Route::apiResource('/cart', CartController::class);
+    Route::get('/add-to-order',[CartController::class,'add_cart_To_order']);
 
 });
 
 //for admin(later):
 Route::apiResource('/stores',StoreController::class);
-
-// Route::apiResource('/order', OrderController::class);
-
 
 Route::group(['prefix' => 'products'],function(){
     Route::apiResource('/product',ProductController::class);

@@ -50,8 +50,11 @@ class OrderController extends Controller
         $user = auth()->user();
         ($user);
         if (!$user) {
-            return response()->json(['success' => false, 'message' => 'User  not authenticated.'], 401);
-        }        
+            return response()->json(['Failed' => false, 'message' => 'User  not authenticated.'], 401);
+        }    
+        if (!($user->location)) {
+            return response()->json(['Failed' => false, 'message' => 'Not allowed please enter your location'], 401);
+        }    
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
@@ -169,5 +172,7 @@ class OrderController extends Controller
             return response()->json(['message' => ' Something Wrong happenend ' . $e->getMessage()], 500);
         }
     }
-    
+    public function cancel_order(){
+        
+    }
 }
