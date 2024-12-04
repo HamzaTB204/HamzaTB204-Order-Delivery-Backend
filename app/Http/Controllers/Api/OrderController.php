@@ -133,7 +133,8 @@ class OrderController extends Controller
         try {
             $order = Order::where('user_id', $user->id)->where('id', $id)->firstOrFail();
             $product = Product::findOrFail($request->product_id); 
-            $isUpdated = $product->updateQuantity($product->quantity , $request->quantity );
+            $orderProduct = OrderProduct::where('order_id', $order->id)->where('product_id', $product->id)->firstOrFail();
+            $isUpdated = $product->updateQuantity($orderProduct->quantity , $request->quantity );
             if (!$isUpdated) {
                 return response()->json(['success' => false, 'message' => 'There is not enough product'], 400);
             }

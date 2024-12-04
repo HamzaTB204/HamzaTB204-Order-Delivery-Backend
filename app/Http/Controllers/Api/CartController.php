@@ -53,7 +53,7 @@ class CartController extends Controller
         try {
             $cart = Cart::where('user_id', $user->id)->first();
             $cartProductExists = CartProduct::where('cart_id', $cart->id)->where('product_id', $request->product_id)->exists();
-            $isUpdated = Product::find( $product->product_id)->Quantity($product->quantity);
+            $isUpdated =$product->Quantity($request->quantity);
             if ($isUpdated) {
                 if ($cartProductExists) {
                     return response()->json(['success' => false, 'message' => 'Product is already in your cart.'], 409);
